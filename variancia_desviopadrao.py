@@ -1,6 +1,6 @@
 import math
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 def XPx(x,px):
 	soma = 0
@@ -40,22 +40,24 @@ def desvio(media, dp):
 def graph(x, px, media, var, dp, desvio):
 	plt.figure(figsize=(8, 6))
 	plt.title("[Media  %.2f]   [VAR  %.2f]   [DP  %.2f]" %(media, var, dp))
-	plt.xlabel("X")
+	#plt.xlabel("X")
 	plt.ylabel("P(x)")
 	plt.grid(True)
 
-	plt.plot(x, px, C = 'purple', ls='-', lw='1', marker='o')
+
+	plt.bar(x, px, color='purple', width=.97, edgecolor='gray')
 	m = sum(px) / float(len(px))
- 
+	
 	plt.plot(desvio[0:2], [m+(m/2), m+(m/2)], ls='--', color = '#10A0DF', label="68%% Min %.2f Max %.2f"%(desvio[0], desvio[1]))
 	plt.plot(desvio[2:4], [m, m], ls='--', color = 'red',  label="95%% Min %.2f Max %.2f"%(desvio[2], desvio[3]))
-	plt.plot(desvio[4:6], [m/2, m/2], ls='--', color = '#FFB31D', label="99.7%% Min %.2f Max %.2f"%(desvio[4], desvio[5]))
+	plt.plot(desvio[4:6], [(m/2), (m/2)], ls='--', color = '#E68400', label="99.7%% Min %.2f Max %.2f"%(desvio[4], desvio[5]))
 	plt.legend()
 	plt.show()
 
 
-x = [10, 20, 30, 40, 50, 60]
-px = [.05, .2, .3, .25, .1, .1]
+x = list(range(-4, 5))
+px = [.02, .07, .1, .15, .3, .18, .1, .06, .02]
+
 
 media = XPx(x, px)
 var = VAR(media, x, px)
